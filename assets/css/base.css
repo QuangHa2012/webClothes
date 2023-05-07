@@ -1,0 +1,232 @@
+:root {
+    --white-color: #fff;
+    --black-color:#000;
+    --text-color:#333;
+    --primary-color: #000;
+    --border-color:#dbdbdb;
+    --start-gold:#eda500;
+    --header-sort-bar-height:46px;
+    --navbar-height:34px;
+    --header-height:120px;
+    --header-width-search-height: calc(var(--header-height) - var(--navbar-height));
+}   
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    font-size:62.5%;/*1rem=10px*/
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6rem;
+    box-sizing: border-box;
+}
+
+p {
+    font-size:1rem;
+    line-height: 1.6rem;
+
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display:flex;
+    -webkit-animation: faceIn linear 0.1s;
+    -moz-animation: faceIn linear 0.1s;
+    -ms-animation: faceIn linear 0.1s;
+    animation: faceIn linear 0.1s;
+    will-change: opacity;
+    
+}
+
+
+
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal__body {
+    background-color: #fff;  
+    margin: auto;
+    z-index: 3;
+    border-radius: 5px;
+    overflow: hidden;
+    --grow-from:0.7;
+    --grow-to:1;
+    -webkit-animation: growth linear 0.1s;
+    -moz-animation: growth linear 0.1s;
+    -ms-animation: growth linear 0.1s;
+    animation: growth linear 0.1s;
+    will-change: transfrom;
+    
+}
+
+@keyframes growth {
+    from {
+        
+        transform: var(--growth-from);
+    }
+    to {
+        transform: var(--growth-to);
+    }
+}
+
+
+/*button btn*/
+
+.btn {
+    min-width: 124px;
+    height: 34px;
+    border:none;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    padding:0 12px;
+    background-color: var(--white-color);
+    cursor: pointer;
+    color:var(--text-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6rem;
+}
+
+.btn.btn--normal:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btn.btn-primary {
+    color:var(--white-color);
+    background-color:var(--primary-color);
+    
+}
+
+.btn.btn-primary:hover {
+    color:var(--black-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn.btn-disabled {/*vô hiệu hóa*/
+    cursor:default;
+    background-color: #c3c3c3;
+    color:#939393;
+}
+
+.btn.btn--size-s {
+    padding:0 8px;
+    height:32px;
+    font-size: 1.2rem;
+}
+.btn.btn-addcart {
+    color: var(--black-color);
+    background-color: var(--white-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn.btn-buy {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+}
+/*selection*/
+
+.select-input {
+    position: relative;
+    min-width: 200px;
+    height: 34px;
+    padding:0 12px;
+    border-radius: 2px;
+    background-color: var(--white-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-input:hover .select-input__list {
+    display: block;
+}
+.select-input__label {
+    
+    font-size: 1.4rem;
+}
+
+.select-input__icon {
+    font-size: 1.4rem;
+    color: rgb(131,131,131,);
+    
+    position: relative;
+    top:1px;
+
+}
+
+.select-input__list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25px;
+    border-radius: 2px;
+    background-color: var(--white-color);
+    list-style-type: none;
+    padding: 8px 16px;
+    display: none;
+    z-index: 1;
+}
+
+.select-input__link {
+    display: block;
+    padding: 4px 0;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.4rem;
+}
+
+.select-input__link:hover {
+    color: var(--primary-color);
+}
+
+/*pagination*/
+.pagination {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+}
+
+.pagination-item {
+    margin: 0 15px;
+}
+
+.pagination-item--active .pagination-item__link{
+    background-color: var(--primary-color);
+    color:var(--white-color);
+}
+
+.pagination-item--active .pagination-item__link:hover {
+    opacity: 0.9;
+    color:var(--white-color);
+}
+
+.pagination-item__link {
+    --height:30px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 380;
+    color:#939393;
+    min-width: 40px;
+    height: var(--height);
+    text-align: center;
+    line-height: var(--height);
+    border-radius: 2px;
+    -webkit-tap-highlight-color: transparent;
+} 
+
+
