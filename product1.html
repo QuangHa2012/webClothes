@@ -11,11 +11,15 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/grid.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/jquery-3.6.4.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,300;8..144,400;8..144,500;8..144,700&family=Roboto:wght@100;300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.min.css">
     <link rel="stylesheet" href="./themify-icons/themify-icons.css">
+   
 </head>
 
 <body>
@@ -305,7 +309,7 @@
 
         <div class="app__container" style="background-color: #f5f5f5;">
             <div class="grid wide" >
-                <div class="row lg-gutter app__content"style="background-color: #fff;">
+                <div class="product-item row lg-gutter app__content"style="background-color: #fff;">
                     <div class="col l-5 m-5 c-12">
                         <div class="product-img" 
                         style="background-image: url(https://cf.shopee.vn/file/e86e882f10c2d0cd8e9794efed7cbc62); 
@@ -337,11 +341,11 @@
 
                         <div class="item-quantity" style="margin-top: 10px;">
                             <span >Số lượng</span>
-                            <input type="number" value="">
+                            <input type="number" value="" >
                             <span>Còn 100 sản phẩm</span>
                         </div>
                         <div style="margin-top: 10px;">
-                            <a href="" class="btn btn-addcart">Thêm giỏ hàng</a>
+                            <a href="#"  class="btn btn-addcart">Thêm giỏ hàng</a>
                             <a href="" class="btn btn-buy">Mua hàng</a>
                         </div>
                     </div>
@@ -498,8 +502,75 @@
             </div>
         </footer>
     </div>
+s
+    <script>
+        var cartItems = [];
+        $(".btn-addcart").click(function () {
+            var $product = $(this).closest('.product-item');
+            var productimg = $product.find('.product-img').css('background-image');
+            productimg = productimg.replace('url("', '  ').replace('")', '');
+            var productname = $product.find('.product__name').text();
+            var productprice = $product.find('.product__price-new').text();
+            var productitem = {
+                imgurl: productimg,
+                name: productname,
+                price: productprice
+            };
+
+            var isExist = false;
+            for (var i = 0; i < cartItems.length; i++) {
+                if (cartItems[i].name === productname) {
+                    cartItems[i].quantity++;
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (!isExist) {
+                productitem.quantity = 1;
+                cartItems.push(productitem);
+            }
+        //    cartItems.push(productitem);
+           updateCart();
+        })
 
 
+        function updateCart() {
+                var carthtml= '';
+                var $cart = $('.header__cart-list-item');
+                // $cart.empty(); 
+                cartItems.forEach(item => {
+                    carthtml +=
+                        `<li class="header__cart-item">
+                        < img src = "${item.imgurl}" alt = ""
+                                            class= "header__cart-img" >
+
+                        <div class="header__cart-item-info">
+                            <div class="header__cart-item-head">
+                                <h5 class="header__cart-item-name">${item.name}</h5>
+                                <div class="header__cart-item-price-wrap">
+                                    <span class="header__cart-item-price">${item.price}</span>
+                                    <span class="header__cart-item-multiply">x</span>
+                                    <span class="header__cart-item-quantity">1</span>
+                                </div>
+                            </div>
+
+                            <div class="header__cart-item-body">
+                                <span class="header__cart-item-desc">
+                                    Phân loại : Đen,M
+                                </span>
+                                <span class="header__cart-item-remove">Xoá</span>
+
+                            </div>
+                        </div>
+                    </li >`;
+
+                    
+                });
+                    
+                $cart.html(carthtml);
+            }
+    </script>
     
 </body>
 

@@ -52,5 +52,128 @@ $(document).ready(function () {
     $("#auth-form__input--email").blur(checkemail);
     $("#auth-form__input--password").blur(checkpassword);
     $("#auth-form__input--confirmpassword").blur(checkconfirmpassword);
+
+
+
+    
+
+
 })
+
+
+var cartItems = [];
+        $(".btn-addcart").click(function () {
+            var $product = $(this).closest('.product-item');
+            var productimg = $product.find('.product-img').css('background-image');
+            productimg = productimg.replace('url("', '  ').replace('")', '');
+            var productname = $product.find('.product__name').text();
+            var productprice = $product.find('.product__price-new').text();
+            var productitem = {
+                imgurl: productimg,
+                name: productname,
+                price: productprice
+            };
+
+            var isExist = false;
+            for (var i = 0; i < cartItems.length; i++) {
+                if (cartItems[i].name === productname) {
+                    cartItems[i].quantity++;
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (!isExist) {
+                productitem.quantity = 1;
+                cartItems.push(productitem);
+            }
+        //    cartItems.push(productitem);
+           updateCart();
+        })
+
+
+        function updateCart() {
+                var carthtml= '';
+                var $cart = $('.header__cart-list-item');
+                // $cart.empty(); 
+                cartItems.forEach(item => {
+                    carthtml +=
+                        `<li class="header__cart-item">
+                        < img src = "${item.imgurl}" alt = ""
+                                            class= "header__cart-img" >
+
+                        <div class="header__cart-item-info">
+                            <div class="header__cart-item-head">
+                                <h5 class="header__cart-item-name">${item.name}</h5>
+                                <div class="header__cart-item-price-wrap">
+                                    <span class="header__cart-item-price">${item.price}</span>
+                                    <span class="header__cart-item-multiply">x</span>
+                                    <span class="header__cart-item-quantity">1</span>
+                                </div>
+                            </div>
+
+                            <div class="header__cart-item-body">
+                                <span class="header__cart-item-desc">
+                                    Phân loại : Đen,M
+                                </span>
+                                <span class="header__cart-item-remove">Xoá</span>
+
+                            </div>
+                        </div>
+                    </li >`;
+
+                    
+                });
+                    
+                $cart.html(carthtml);
+            }
+
+
+// validation form login
+// const inputUsername = document.querySelector(".input-login-username");
+// const inputPassword = document.querySelector(".input-login-password");
+// const btnLogin = document.querySelector(".login__signInButton");
+
+// // validation form login
+
+// btnLogin.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   if (inputUsername.value === "" || inputPassword.value === "") {
+//     alert("vui lòng không để trống");
+//   } else {
+//     const user = JSON.parse(localStorage.getItem(inputUsername.value));
+    
+//     if (
+//       user.username === inputUsername.value &&
+//       user.password === inputPassword.value
+//     ) {
+//       alert("Đăng Nhập Thành Công");
+//       window.location.href = "../index.html";
+//     } else {
+//       alert("Đăng Nhập Thất Bại");
+//     }
+//   }
+// });
+
+// const inputUsername = document.querySelector(".input-login-username");
+// const inputPassword = document.querySelector(".input-login-password");
+// const btnLogin = document.querySelector(".login__signInButton");
+
+// btnLogin.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   const user = JSON.parse(localStorage.getItem(inputUsername.value));
+//   if (!user) {
+//     alert("Tài khoản không tồn tại");
+//   } else if (inputUsername.value === "" || inputPassword.value === "") {
+//     alert("Vui lòng không để trống");
+//   } else if (
+//     user.username === inputUsername.value &&
+//     user.password === inputPassword.value
+//   ) {
+//     alert("Đăng Nhập Thành Công");
+//     window.location.href = "../index.html";
+//   } else {
+//     alert("Đăng Nhập Thất Bại");
+//   }
+// });
 
