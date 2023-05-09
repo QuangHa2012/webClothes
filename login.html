@@ -58,13 +58,13 @@
                 </div>
         
                 <div class="auth-form__form">
-                    
+                    <div><span class="text-danger" id="tbchung"></span></div>
                     <div class="auth-form__group">
-                        <input type="text" class="auth-form__input" placeholder="Nhập email">
+                        <input id="auth-form__input--email" type="email" class="auth-form__input" placeholder="Nhập email">
                     </div>
         
                     <div>
-                        <input type="password" class="auth-form__input" placeholder="Nhập mật khẩu">
+                        <input id="auth-form__input--password" type="password" class="auth-form__input" placeholder="Nhập mật khẩu">
                     </div>
         
                 </div>
@@ -80,7 +80,7 @@
                 <div class="auth-form__control">
                     <button class="btn auth-form__control-back btn--normal">TRỞ LẠI</button>
         
-                    <button class="btn btn-primary">ĐĂNG NHẬP</button>
+                    <button class="btn-dn btn btn-primary">ĐĂNG NHẬP</button>
                 </div>
             </div>
         
@@ -228,5 +228,120 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        $(document).ready(function () {
+                //kiểm tra email 
+                function checkemail() {
+                    var email = $("#auth-form__input--email").val();
+                    let regexemail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/gi;
+                    if (email.trim() === ' ') {
+                        $("#tbchung").html("Email bắt buộc nhập");
+                        return false;
+                    }
+
+                    if (regexemail.test(email)) {
+                        $("#tbchung").html("");
+                        return true;
+                    }
+                    else {
+                        $("#tbchung").html("Email không đúng định dạng");
+                        return false;
+                    }
+                }
+                //kiểm tra mật khẩu 
+                function checkpassword() {
+                    var password = $("#auth-form__input--password").val();
+                    let regexpassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
+                    if (password.trim() == '') {
+                        $("#tbchung").html("Mật khẩu bắt buộc nhập");
+                        return false;
+                    }
+                    if (regexpassword.test(password)) {
+                        $("#tbchung").html("");
+                        return true;
+                    }
+                    else {
+                        $("#tbchung").html("Mật khẩu phải có ít nhất 8 kí tự có cả chữ và số ");
+                        return false;
+                    }
+
+
+                }
+                //kiểm tra xác thực mật khẩu 
+                function checkconfirmpassword() {
+                    var password = $("#auth-form__input--password").val();
+                    var confirmpassword = $("#auth-form__input--confirmpassword").val();
+                    if (confirmpassword.trim() === '') {
+                        $("#tbchung").html("Xác thực mật khẩu");
+                        return false;
+                    }
+
+                    if (password === confirmpassword) {
+                        $("#tbchung").html("");
+                        return true;
+                    }
+                    else {
+                        $("#tbchung").html("Không đúng mật khẩu");
+                        return false;
+                    }
+                }
+
+                $("#auth-form__input--email").blur(checkemail);
+                $("#auth-form__input--password").blur(checkpassword);
+                $("#auth-form__input--confirmpassword").blur(checkconfirmpassword);
+
+                // lưu người dùng 
+                $('.btn-dk').click(function () {
+                    if (!checkconfirmpassword() || !checkpassword() || !checkemail()) {
+                        return false;
+                    }
+                    var email = $("#auth-form__input--email").val();
+                    var password = $("#auth-form__input--password").val();
+                    var confirmpassword = $("#auth-form__input--confirmpassword").val();
+
+                    const user = {
+                        useremail: email,
+                        userpassword: password
+                    }
+
+                    let json = JSON.stringify(user);
+                    localStorage.setItem(email, json);
+                    localStorage.setItem(password, json);
+                    alert("Đăng Ký Thành Công");
+                    window.location.href = "login.html";
+                })
+
+
+                // người dùng đăng nhập 
+                $('.btn-dn').click(function () {
+                    if (!checkpassword() || !checkemail()) {
+                        return false;
+                    }
+                    var loginEmail = $('#auth-form__input--email').val();
+                    var loginPassword = $('#auth-form__input--password').val();
+                    const user = {
+                        email: JSON.parse(localStorage.getItem(loginEmail)),
+                        password: JSON.parse(localStorage.getItem(loginPassword))
+                    }
+
+                    if (!user) {
+                        alert("Tài khoản không tồn tại");
+                    }
+                    else if (user.email === loginEmail && user.password === loginPassword) {
+                        alert("Đăng Nhập Thành Công");
+                        window.location.href = "index.html";
+                    }
+                    else {
+                        alert("Đăng Nhập Thất Bại");
+                    }
+
+
+
+                })
+
+
+            })
+    </script>
 </body>
 </html>

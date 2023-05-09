@@ -1,4 +1,5 @@
 $(document).ready(function () { 
+    //kiểm tra email 
     function checkemail() {
         var email = $("#auth-form__input--email").val();
         let regexemail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/gi;
@@ -16,7 +17,7 @@ $(document).ready(function () {
                       return false;
                 }
     }
-
+    //kiểm tra mật khẩu 
     function checkpassword() {
         var password = $("#auth-form__input--password").val();
         let regexpassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi;
@@ -35,10 +36,15 @@ $(document).ready(function () {
 
     
     }
-
+    //kiểm tra xác thực mật khẩu 
     function checkconfirmpassword() {
         var password = $("#auth-form__input--password").val();
         var confirmpassword = $("#auth-form__input--confirmpassword").val();
+        if (confirmpassword.trim() === '') {
+            $("#tbchung").html("Xác thực mật khẩu");
+                return false;
+        }
+            
         if (password === confirmpassword) { 
             $("#tbchung").html("");
                 return true;
@@ -53,7 +59,7 @@ $(document).ready(function () {
     $("#auth-form__input--password").blur(checkpassword);
     $("#auth-form__input--confirmpassword").blur(checkconfirmpassword);
 
-
+    // lưu người dùng 
     $('.btn-dk').click(function () { 
         if (!checkconfirmpassword() || !checkpassword() || !checkemail()) {
             return false;
@@ -75,6 +81,32 @@ $(document).ready(function () {
     })
     
 
+    // người dùng đăng nhập 
+    $('.btn-dn').click(function () {
+        if (!checkpassword() || !checkemail()) {
+            return false;
+        }
+        var loginEmail = $('#auth-form__input--email').val();
+        var loginPassword = $('#auth-form__input--password').val();
+        const user = JSON.parse(localStorage.getItem(loginEmail)),
+            
+
+        if (!user) { 
+            alert("Tài khoản không tồn tại");
+        }
+        else if (loginEmail === user.useremail && loginPassword === user.userpassword)
+        {
+            alert("Đăng Nhập Thành Công");
+            window.location.href = "index.html";
+        }
+        else {     
+            alert("Đăng Nhập Thất Bại");
+        }
+
+
+        
+    })  
+    
 
 })
 
