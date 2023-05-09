@@ -88,13 +88,13 @@ $(document).ready(function () {
         }
         var loginEmail = $('#auth-form__input--email').val();
         var loginPassword = $('#auth-form__input--password').val();
-        const user = JSON.parse(localStorage.getItem(loginEmail)),
+        const user = JSON.parse(localStorage.getItem(loginEmail));
             
 
         if (!user) { 
             alert("Tài khoản không tồn tại");
         }
-        else if (loginEmail === user.useremail && loginPassword === user.userpassword)
+        else if (loginEmail === user.useremail && loginPassword === user.resetpassword)
         {
             alert("Đăng Nhập Thành Công");
             window.location.href = "index.html";
