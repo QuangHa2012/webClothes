@@ -54,7 +54,25 @@ $(document).ready(function () {
     $("#auth-form__input--confirmpassword").blur(checkconfirmpassword);
 
 
+    $('.btn-dk').click(function () { 
+        if (!checkconfirmpassword() || !checkpassword() || !checkemail()) {
+            return false;
+        }
+        var email = $("#auth-form__input--email").val();
+        var password = $("#auth-form__input--password").val();
+        var confirmpassword = $("#auth-form__input--confirmpassword").val();
 
+        const user = {
+            useremail: email,
+            userpassword: password
+        }
+
+        let json = JSON.stringify(user);
+        localStorage.setItem(email, json);
+        localStorage.setItem(password, json);
+        alert("Đăng Ký Thành Công");
+        window.location.href = "login.html";
+    })
     
 
 
